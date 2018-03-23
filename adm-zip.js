@@ -215,8 +215,9 @@ module.exports = function (/*String*/input) {
          * @param zipPath optional path inside zip
          * @param filter optional RegExp or Function if files match will
          *               be included.
+         * @param {boolean} pack запаковывать в папку 
          */
-        addLocalFolder: function (/*String*/localPath, /*String*/zipPath, /*RegExp|Function*/filter) {
+        addLocalFolder: function (/*String*/localPath, /*String*/zipPath, /*RegExp|Function*/filter, pack) {
             if (filter === undefined) {
                 filter = function () { return true; };
             } else if (filter instanceof RegExp) {
@@ -249,6 +250,10 @@ module.exports = function (/*String*/input) {
                     items.forEach(function (path) {
                         var p = path.split("\\").join("/").replace(new RegExp(localPath, 'i'), ""); //windows fix
                         if (filter(p)) {
+                            if (pack) {
+                                p = path.basename(localPath) + '/' + p;
+                            }
+
                             if (p.charAt(p.length - 1) !== "/") {
                                 self.addFile(zipPath + p, fs.readFileSync(path), "", 0)
                             } else {
