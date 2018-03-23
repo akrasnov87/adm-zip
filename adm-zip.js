@@ -251,7 +251,7 @@ module.exports = function (/*String*/input) {
                         var p = path.split("\\").join("/").replace(new RegExp(localPath, 'i'), ""); //windows fix
                         if (filter(p)) {
                             if (pack) {
-                                p = pht.basename(localPath) + '/' + p;
+                                p = pth.basename(localPath) + '/' + p;
                             }
 
                             if (p.charAt(p.length - 1) !== "/") {
